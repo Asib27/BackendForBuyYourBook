@@ -59,6 +59,7 @@ public class ReviewController {
     public Review upVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setUpvotes(review.getUpvotes()+1);
+         reviewService.updateUpvoteNotification(review.getUserCloned().getId());
         return reviewService.addNewReview(review);
     }
 
@@ -66,6 +67,7 @@ public class ReviewController {
     public Review downVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setDownvotes(review.getDownvotes() + 1);
+         reviewService.updateDownVoteNotification(review.getUserCloned().getId());
         return reviewService.addNewReview(review);
     }
 

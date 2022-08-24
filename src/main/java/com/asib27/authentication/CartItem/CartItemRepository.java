@@ -40,4 +40,8 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Modifying
     @Query(value = "DELETE FROM cart_item where user_id=?1", nativeQuery = true)
     void delete_cart_items(Long id);
+
+    @Modifying
+    @Query(value = "Call notification_buy_successful(?1)", nativeQuery = true)
+    void updateNotification(Long id);
 }

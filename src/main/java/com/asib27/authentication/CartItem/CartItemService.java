@@ -74,4 +74,9 @@ public class CartItemService {
     public void delete_cart_items(UserCloned user) {
         cartItemRepository.delete_cart_items(user.getId());
     }
+
+    @Transactional
+    public void updateNotification(UserCloned user) {
+        cartItemRepository.updateNotification(user.getId());
+    }
 }
