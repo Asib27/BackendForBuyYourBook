@@ -51,5 +51,9 @@ public class BookService {
         Book book = bookRepository.findById(bookname).get();
         return book.getLink();
     }
+
+    public Book getBookData(String isbn) {
+        return bookRepository.findById(isbn).get();
+    }
 }
 

@@ -189,6 +189,10 @@ public class Book {
         reviews.add(review);
     }
 
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
     public String getLink() {
         return link;
     }

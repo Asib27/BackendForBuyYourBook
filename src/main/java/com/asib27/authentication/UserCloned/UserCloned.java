@@ -54,11 +54,6 @@ public class UserCloned {
     @ManyToMany(mappedBy = "follows")
     private Set<UserCloned>followedby = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "userCloned")
-    private Set<Review> reveiws = new HashSet<>();
-
-
     public Long getId() {
         return id;
     }
@@ -101,11 +96,6 @@ public class UserCloned {
 
     public Set<UserCloned> getFollowedby() {
         return followedby;
-    }
-
-    public void addReview(Review review)
-    {
-        reveiws.add(review);
     }
 
     public String getLink() {

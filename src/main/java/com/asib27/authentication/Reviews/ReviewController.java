@@ -2,7 +2,6 @@ package com.asib27.authentication.Reviews;
 
 import com.asib27.authentication.Book.Book;
 import com.asib27.authentication.Book.BookService;
-import com.asib27.authentication.UserCloned.UserCloned;
 import com.asib27.authentication.UserCloned.UserClonedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +24,18 @@ public class ReviewController {
 
     @PostMapping("/add")
     public String addNewReview(@RequestBody Review review){
+        review.setUser_id(userClonedService.getCurrentUser().getId());
         reviewService.addNewReview(review);
         return "new review added";
     }
 
-    @GetMapping("/get/all/{book_name}")
-    public List<Review> getReViewByBookName(@PathVariable String book_name){
-        String x = bookService.getBookIdByName(book_name);
-        return reviewService.getReviewByBookId(x);
+    @GetMapping("/get/all")
+    public List<Review> getReViewByBookId(@RequestParam String isbn){
+        return reviewService.getReviewByBookId(isbn);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteReviewById(@PathVariable Long id){
+    @DeleteMapping("/delete")
+    public String deleteReviewById(@RequestParam Long id){
         reviewService.deleteReview(id);
         return "review deleted !!";
     }
@@ -48,19 +47,12 @@ public class ReviewController {
         review.setBook(book);
         return reviewService.addNewReview(review);
     }
-    @PostMapping("/add/{review_id}/user/{user_id}")
-    public Review addReviewToUser(@PathVariable Long review_id, @PathVariable Long user_id){
-        Review review = reviewService.getReview(review_id);
-        UserCloned user = userClonedService.getAnUser(user_id);
-        review.setUserCloned(user);
-        return reviewService.addNewReview(review);
-    }
 
     @PostMapping("/add/{review_id}/up")
     public Review upVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setUpvotes(review.getUpvotes()+1);
-         reviewService.updateUpvoteNotification(review.getUserCloned().getId());
+        reviewService.updateUpvoteNotification(review.getUser_id());
         return reviewService.addNewReview(review);
     }
 
@@ -68,46 +60,39 @@ public class ReviewController {
     public Review downVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setDownvotes(review.getDownvotes() + 1);
-         reviewService.updateDownVoteNotification(review.getUserCloned().getId());
+        reviewService.updateDownVoteNotification(review.getUser_id());
         return reviewService.addNewReview(review);
     }
 
-    @GetMapping("/get/average_rating/{book_name}")
-    public float getAvgRatingByBookName(@PathVariable String book_name){
-        String id = bookService.getBookIdByName(book_name);
-        System.out.println(book_name + " has book_id " + id);
-        float x =  reviewService.getAvgRatingByBookName(id);
-        System.out.println("average rating " + x);
+    @GetMapping("/get/average_rating")
+    public float getAvgRatingByBookId(@RequestParam String isbn){
+        float x =  reviewService.getAvgRatingByBookName(isbn);
         return x;
     }
-    @GetMapping("/get/review_count/{book_name}")
-    public int getReviewCountByBookName(@PathVariable String book_name){
-        String id = bookService.getBookIdByName(book_name);
-        int x =  reviewService.getReviewCountByBookName(id);
+    @GetMapping("/get/review_count")
+    public int getReviewCountByBookId(@RequestParam String isbn){
+        int x =  reviewService.getReviewCountByBookName(isbn);
         return x;
     }
 
-    @GetMapping("/get/rating_percentage/{book_name}")
-    public Map<Integer, String> getRatingPercentage(@PathVariable String book_name){
-        String id = bookService.getBookIdByName(book_name);
-        List<Object[]> result = reviewService.getRatingPercentage(id);
-        Map<Integer, String> map = new HashMap<>();
+    @GetMapping("/get/rating_percentage")
+    public Map<String, String> getRatingPercentage(@RequestParam String isbn){
+        List<Object[]> result = reviewService.getRatingPercentage(isbn);
+        Map<String, String> map = new HashMap<>();
         for(Object[] x:result){
-            map.put((Integer) x[0], x[1].toString());
+            map.put(x[0].toString(), x[1].toString());
         }
 
         return map;
     }
 
-    @GetMapping("/get/random/{book_name}/{no}")
-    public List<Review> getRandomReviews(@PathVariable String book_name, @PathVariable int no){
-        String id = bookService.getBookIdByName(book_name);
-        return reviewService.getRandomReviews(id, no);
+    @GetMapping("/get/random")
+    public List<Review> getRandomReviews(@RequestParam String isbn, @RequestParam int no){
+        return reviewService.getRandomReviews(isbn, no);
     }
-    @GetMapping("/get/mixed/{book_name}/{no}")
-    public List<Review> getMixedReviews(@PathVariable String book_name, @PathVariable int no){
-        String id = bookService.getBookIdByName(book_name);
-        return reviewService.getMixedReviews(id, no);
+    @GetMapping("/get/mixed")
+    public List<Review> getMixedReviews(@RequestParam String isbn, @RequestParam int no){
+        return reviewService.getMixedReviews(isbn, no);
     }
 
 
