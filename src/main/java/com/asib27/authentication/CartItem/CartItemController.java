@@ -20,7 +20,7 @@ public class CartItemController {
     Double totalPrice = 0.0;
 
     @PostMapping("/add")
-    public CartItem addNewCartItem(@RequestParam Long bookId, @RequestParam(defaultValue = "1") Integer quantity){
+    public CartItem addNewCartItem(@RequestParam String bookId, @RequestParam(defaultValue = "1") Integer quantity){
         if(bookId == null )return null;
         UserCloned user = userClonedService.getCurrentUser();
         return cartItemService.addNewCartItem(bookId, user, quantity);

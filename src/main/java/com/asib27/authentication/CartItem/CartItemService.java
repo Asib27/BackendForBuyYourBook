@@ -24,7 +24,7 @@ public class CartItemService {
     UserClonedService userClonedService;
 
 
-    public CartItem addNewCartItem(Long bookId, UserCloned user, Integer quantity) {
+    public CartItem addNewCartItem(String bookId, UserCloned user, Integer quantity) {
         CartItem cartItem = new CartItem();
 
         cartItem.setUser(user);

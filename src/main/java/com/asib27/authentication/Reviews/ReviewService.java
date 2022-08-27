@@ -35,28 +35,28 @@ public class ReviewService {
         }
     }
 
-    public float getAvgRatingByBookName(Long id) {
+    public float getAvgRatingByBookName(String id) {
 
         return reviewRepository.getAvgRatingByBookName(id);
     }
 
-    public int getReviewCountByBookName(Long id) {
+    public int getReviewCountByBookName(String id) {
         return reviewRepository.getReviewCountByBookName(id);
     }
 
-    public List<Object[]> getRatingPercentage(Long id) {
+    public List<Object[]> getRatingPercentage(String id) {
         return reviewRepository.getRatingPercentage(id);
     }
 
-    public List<Review> getReviewByBookId(Long book_id) {
+    public List<Review> getReviewByBookId(String book_id) {
         return reviewRepository.getReviewByBookId(book_id);
     }
 
-    public List<Review> getRandomReviews(Long id, int no) {
+    public List<Review> getRandomReviews(String id, int no) {
         return reviewRepository.getRandomReviews(id, no);
     }
 
-    public List<Review> getMixedReviews(Long id, int no) {
+    public List<Review> getMixedReviews(String id, int no) {
         return reviewRepository.getMixedReviews(id, no);
     }
 

@@ -31,7 +31,7 @@ public class ReviewController {
 
     @GetMapping("/get/all/{book_name}")
     public List<Review> getReViewByBookName(@PathVariable String book_name){
-        Long x = bookService.getBookIdByName(book_name);
+        String x = bookService.getBookIdByName(book_name);
         return reviewService.getReviewByBookId(x);
     }
 
@@ -42,7 +42,7 @@ public class ReviewController {
     }
 
     @PostMapping("/add/{review_id}/book/{book_id}")
-    public Review addReviewToBook(@PathVariable Long review_id, @PathVariable Long book_id){
+    public Review addReviewToBook(@PathVariable Long review_id, @PathVariable String book_id){
         Review review = reviewService.getReview(review_id);
         Book book = bookService.getBook(book_id);
         review.setBook(book);
@@ -74,7 +74,7 @@ public class ReviewController {
 
     @GetMapping("/get/average_rating/{book_name}")
     public float getAvgRatingByBookName(@PathVariable String book_name){
-        Long id = bookService.getBookIdByName(book_name);
+        String id = bookService.getBookIdByName(book_name);
         System.out.println(book_name + " has book_id " + id);
         float x =  reviewService.getAvgRatingByBookName(id);
         System.out.println("average rating " + x);
@@ -82,14 +82,14 @@ public class ReviewController {
     }
     @GetMapping("/get/review_count/{book_name}")
     public int getReviewCountByBookName(@PathVariable String book_name){
-        Long id = bookService.getBookIdByName(book_name);
+        String id = bookService.getBookIdByName(book_name);
         int x =  reviewService.getReviewCountByBookName(id);
         return x;
     }
 
     @GetMapping("/get/rating_percentage/{book_name}")
     public Map<Integer, String> getRatingPercentage(@PathVariable String book_name){
-        Long id = bookService.getBookIdByName(book_name);
+        String id = bookService.getBookIdByName(book_name);
         List<Object[]> result = reviewService.getRatingPercentage(id);
         Map<Integer, String> map = new HashMap<>();
         for(Object[] x:result){
@@ -101,12 +101,12 @@ public class ReviewController {
 
     @GetMapping("/get/random/{book_name}/{no}")
     public List<Review> getRandomReviews(@PathVariable String book_name, @PathVariable int no){
-        Long id = bookService.getBookIdByName(book_name);
+        String id = bookService.getBookIdByName(book_name);
         return reviewService.getRandomReviews(id, no);
     }
     @GetMapping("/get/mixed/{book_name}/{no}")
     public List<Review> getMixedReviews(@PathVariable String book_name, @PathVariable int no){
-        Long id = bookService.getBookIdByName(book_name);
+        String id = bookService.getBookIdByName(book_name);
         return reviewService.getMixedReviews(id, no);
     }
 
