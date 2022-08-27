@@ -29,7 +29,7 @@ public class ReviewController {
         return "new review added";
     }
 
-    @GetMapping("/review")
+    @GetMapping("/review/all")
     public List<Review> getReViewByBookId(@PathVariable String isbn){
         return reviewService.getReviewByBookId(isbn);
     }
