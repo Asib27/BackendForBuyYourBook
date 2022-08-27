@@ -60,6 +60,11 @@ public class Book {
     )
     private int quantity_available;
 
+    @Column(
+            name="link"
+    )
+    private String link;
+
 
     @ManyToMany
     @JoinTable(name = "authorOfBooks",
@@ -97,7 +102,7 @@ public class Book {
 
     public Book(Long isbn, String name, int edition,
                 String language, String genre, int price,
-                int quantity_available) {
+                int quantity_available, String link) {
         this.id = isbn;
         this.name = name;
         this.edition = edition;
@@ -105,6 +110,7 @@ public class Book {
         this.genre = genre;
         this.price = price;
         this.quantity_available = quantity_available;
+        this.link = link;
     }
 
     public Long getIsbn() {
@@ -179,9 +185,15 @@ public class Book {
         return publisher;
     }
 
-
-
     public void addReview(Review review){
         reviews.add(review);
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

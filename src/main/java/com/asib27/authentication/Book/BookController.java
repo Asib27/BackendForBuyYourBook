@@ -67,5 +67,10 @@ public class BookController {
         book.addPublisher(publisher);
         return bookService.addNewBook(book);
     }
+
+    @GetMapping("/get/bookLink")
+    public String getBookImageLink(@RequestParam Long bookid){
+        return bookService.getLink(bookid);
+    }
 }
 
