@@ -43,14 +43,13 @@ public class Review {
     )
     private Timestamp addDate;
 
+    @Column(name = "user_id")
+    private Long user_id;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", referencedColumnName = "isbn")
     private Book book;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "userid")
-    private UserCloned userCloned;
 
     public Review(int upvotes, int downvotes, String review_text, int rating, Timestamp addDate) {
         this.upVotes = upvotes;
@@ -103,14 +102,6 @@ public class Review {
         this.book = book;
     }
 
-    public UserCloned getUserCloned() {
-        return userCloned;
-    }
-
-    public void setUserCloned(UserCloned userCloned) {
-        this.userCloned = userCloned;
-    }
-
     public String getReview_text() {
         return review_text;
     }
@@ -125,5 +116,13 @@ public class Review {
 
     public void setAddDate(Timestamp addDate) {
         this.addDate = addDate;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
     }
 }

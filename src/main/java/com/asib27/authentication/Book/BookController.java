@@ -43,6 +43,11 @@ public class BookController {
         return x;
     }
 
+    @GetMapping("/get/book")
+    public Book getBookData(@RequestParam String isbn){
+        return bookService.getBookData(isbn);
+    }
+
     @PostMapping("/add")
     public String addNewBook(@RequestBody Book book){
         bookService.addNewBook(book);
