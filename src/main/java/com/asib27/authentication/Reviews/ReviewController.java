@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/review")
+@RequestMapping("/api/book/{isbn}")
 public class ReviewController {
 
     @Autowired
@@ -22,21 +22,21 @@ public class ReviewController {
     @Autowired
     UserClonedService userClonedService;
 
-    @PostMapping("/add")
+    @PostMapping("/review/add")
     public String addNewReview(@RequestBody Review review){
         review.setUser_id(userClonedService.getCurrentUser().getId());
         reviewService.addNewReview(review);
         return "new review added";
     }
 
-    @GetMapping("/get/all")
-    public List<Review> getReViewByBookId(@RequestParam String isbn){
+    @GetMapping("/review/all")
+    public List<Review> getReViewByBookId(@PathVariable String isbn){
         return reviewService.getReviewByBookId(isbn);
     }
 
-    @DeleteMapping("/delete")
-    public String deleteReviewById(@RequestParam Long id){
-        reviewService.deleteReview(id);
+    @DeleteMapping("/review/delete/{review_id}")
+    public String deleteReviewById(@PathVariable Long review_id){
+        reviewService.deleteReview(review_id);
         return "review deleted !!";
     }
 
@@ -48,7 +48,7 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
-    @PostMapping("/add/{review_id}/up")
+    @PostMapping("/review/upvote/{review_id}")
     public Review upVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setUpvotes(review.getUpvotes()+1);
@@ -56,7 +56,7 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
-    @PostMapping("/add/{review_id}/down")
+    @PostMapping("/review/downvote/{review_id}")
     public Review downVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setDownvotes(review.getDownvotes() + 1);
@@ -64,19 +64,19 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
-    @GetMapping("/get/average_rating")
-    public float getAvgRatingByBookId(@RequestParam String isbn){
+    @GetMapping("/rating/average_rating")
+    public float getAvgRatingByBookId(@PathVariable String isbn){
         float x =  reviewService.getAvgRatingByBookName(isbn);
         return x;
     }
-    @GetMapping("/get/review_count")
-    public int getReviewCountByBookId(@RequestParam String isbn){
+    @GetMapping("/rating/count")
+    public int getReviewCountByBookId(@PathVariable String isbn){
         int x =  reviewService.getReviewCountByBookName(isbn);
         return x;
     }
 
-    @GetMapping("/get/rating_percentage")
-    public Map<String, String> getRatingPercentage(@RequestParam String isbn){
+    @GetMapping("/rating/rating_percentage")
+    public Map<String, String> getRatingPercentage(@PathVariable String isbn){
         List<Object[]> result = reviewService.getRatingPercentage(isbn);
         Map<String, String> map = new HashMap<>();
         for(Object[] x:result){
@@ -87,15 +87,29 @@ public class ReviewController {
     }
 
     @GetMapping("/get/random")
-    public List<Review> getRandomReviews(@RequestParam String isbn, @RequestParam int no){
+    public List<Review> getRandomReviews(@PathVariable String isbn, @RequestParam int no){
         return reviewService.getRandomReviews(isbn, no);
     }
     @GetMapping("/get/mixed")
-    public List<Review> getMixedReviews(@RequestParam String isbn, @RequestParam int no){
+    public List<Review> getMixedReviews(@PathVariable String isbn, @RequestParam int no){
         return reviewService.getMixedReviews(isbn, no);
     }
 
 
-
+    @GetMapping("/review")
+    public List<Review> getTypeBasedReviews(@PathVariable String isbn, 
+        @RequestParam String type, 
+        @RequestParam int count
+    ){
+        if(type.equals("random")){
+            return reviewService.getRandomReviews(isbn, count);
+        }
+        else if(type.equals("mixed")){
+            return reviewService.getMixedReviews(isbn, count);
+        }
+        else{
+            return reviewService.getMixedReviews(isbn, count);
+        }
+    }
 
 }

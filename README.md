@@ -7,7 +7,7 @@ Exposes api endpoints for BuyYourBook frontend
 **`isbn`**: isbn of the book
 
 **Apis**: 
-- /api/book/{isbn}/review - returns all reviews of book.
+- /api/book/{isbn}/review/all - returns all reviews of book.
 - /api/book/{isbn}/review/add - add reviews to the book
 - /api/book/{isbn}/review/delete/{review_id} - deletes reviews with review_id
 - /api/book/{isbn}/review/upvote/{review_id} - upvotes review with review_id
