@@ -3,9 +3,12 @@ package com.asib27.authentication.Reviews;
 import com.asib27.authentication.Book.Book;
 import com.asib27.authentication.Book.BookService;
 import com.asib27.authentication.UserCloned.UserClonedService;
+import com.asib27.authentication.payload.response.ReviewResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,16 @@ public class ReviewController {
     @Autowired
     UserClonedService userClonedService;
 
+    private List<ReviewResponse> getReviewResponseList(List<Review> list){
+        List<ReviewResponse> ans = new  ArrayList<>(list.size());
+
+        for (int i = 0; i < list.size(); i++) {
+            ans.add(i, new ReviewResponse(list.get(i)) );
+        }
+
+        return ans;
+    }
+
     @PostMapping("/review/add")
     public String addNewReview(@RequestBody Review review){
         review.setUser_id(userClonedService.getCurrentUser().getId());
@@ -30,8 +43,8 @@ public class ReviewController {
     }
 
     @GetMapping("/review/all")
-    public List<Review> getReViewByBookId(@PathVariable String isbn){
-        return reviewService.getReviewByBookId(isbn);
+    public List<ReviewResponse> getReViewByBookId(@PathVariable String isbn){
+        return getReviewResponseList(reviewService.getReviewByBookId(isbn));
     }
 
     @DeleteMapping("/review/delete/{review_id}")
@@ -97,18 +110,18 @@ public class ReviewController {
 
 
     @GetMapping("/review")
-    public List<Review> getTypeBasedReviews(@PathVariable String isbn, 
-        @RequestParam String type, 
-        @RequestParam int count
+    public List<ReviewResponse> getTypeBasedReviews(@PathVariable String isbn, 
+        @RequestParam(name="type", defaultValue = "mixed") String type, 
+        @RequestParam(name="count", defaultValue = "5") int count
     ){
         if(type.equals("random")){
-            return reviewService.getRandomReviews(isbn, count);
+            return getReviewResponseList(reviewService.getRandomReviews(isbn, count));
         }
         else if(type.equals("mixed")){
-            return reviewService.getMixedReviews(isbn, count);
+            return getReviewResponseList(reviewService.getMixedReviews(isbn, count));
         }
         else{
-            return reviewService.getMixedReviews(isbn, count);
+            return getReviewResponseList(reviewService.getMixedReviews(isbn, count));
         }
     }
 
