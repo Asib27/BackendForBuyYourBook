@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.asib27.authentication.UserCloned.UserClonedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,6 +52,8 @@ public class AuthController {
     JwtUtils jwtUtils;
     @Autowired
     RefreshTokenService refreshTokenService;
+    @Autowired
+    UserClonedService userClonedService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
@@ -66,7 +70,8 @@ public class AuthController {
             .collect(Collectors.toList());
 
         String refreshToken = refreshTokenService.createRefreshToken(userDetails.getId()).getToken();
-        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+        String link = userClonedService.getLink(userDetails.getUsername());
+        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), link, roles));
     }
 
     @PostMapping("/refreshtoken")
