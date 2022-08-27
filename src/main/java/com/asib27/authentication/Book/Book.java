@@ -8,6 +8,7 @@ import com.asib27.authentication.Writer.Writer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,12 +18,11 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(
-            name = "isbn"
+        name = "isbn",
+        length = 13
     )
-    private Long id;
+    private String id;
 
     @Column(
             name = "name",
@@ -32,14 +32,12 @@ public class Book {
     private String name;
 
     @Column(
-            name= "edition",
-            nullable = false
+            name= "edition"
     )
     private int edition;
 
     @Column(
             name = "language",
-            nullable = false,
             length = 50
     )
     private String language;
@@ -102,7 +100,7 @@ public class Book {
 
 
 
-    public Book(Long isbn, String name, int edition,
+    public Book(String isbn, String name, int edition,
                 String language, String genre, int price,
                 int quantity_available) {
         this.id = isbn;
@@ -114,11 +112,11 @@ public class Book {
         this.quantity_available = quantity_available;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return id;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.id = isbn;
     }
 

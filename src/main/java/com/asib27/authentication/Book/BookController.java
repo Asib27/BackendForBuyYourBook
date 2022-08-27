@@ -20,9 +20,18 @@ public class BookController {
     @Autowired
     PublisherService publisherService;
 
-    @GetMapping("/get")
-    public List<Book> getAllBooks(){
-        return bookService.getAllBooks();
+    @GetMapping("/")
+    public List<Book> getAllBooks(@RequestParam(name = "type", defaultValue = "random") String type,
+        @RequestParam(name = "count", defaultValue = "10") int count
+    
+    ){
+        if(type.equals("random")){
+            return bookService.getRandomBooks(count);
+        }
+        else if(type.equals("top")){
+            return bookService.getRandomBooks(count);
+        }
+        else return bookService.getRandomBooks(count);
     }
 
     @GetMapping("/get/{book_name}")
