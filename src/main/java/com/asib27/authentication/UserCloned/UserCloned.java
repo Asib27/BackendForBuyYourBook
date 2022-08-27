@@ -25,6 +25,9 @@ public class UserCloned {
     @Column(name = "email")
     private String email;
 
+    @Column(name="link")
+    private String link;
+
     public UserCloned(String username, String email) {
         this.username = username;
         this.email = email;
@@ -38,9 +41,6 @@ public class UserCloned {
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "user")
-//    private Transaction transaction;
 
 
     @ManyToMany
@@ -108,4 +108,11 @@ public class UserCloned {
         reveiws.add(review);
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

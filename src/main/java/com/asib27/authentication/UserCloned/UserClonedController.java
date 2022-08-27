@@ -55,4 +55,15 @@ public class UserClonedController {
         return userClonedService.addNewUser(user);
     }
 
+    @PostMapping("/addLink")
+    public String addImageLink(@RequestParam String username, @RequestParam String link){
+        userClonedService.addLink(username, link);
+        return "link added";
+    }
+
+    @GetMapping("/getLink")
+    public String getLink(@RequestParam String username){
+        return userClonedService.getLink(username);
+    }
+
 }

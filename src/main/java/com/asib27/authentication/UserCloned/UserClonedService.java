@@ -41,4 +41,15 @@ public class UserClonedService {
         System.out.println("User id is : "+ id);
         return getAnUser(id);
     }
+
+    public void addLink(String username, String link) {
+        Long id = userClonedRepository.findUserId(username);
+        UserCloned user = userClonedRepository.getReferenceById(id);
+        user.setLink(link);
+        userClonedRepository.save(user);
+    }
+
+    public String getLink(String username) {
+        return userClonedRepository.getReferenceById(userClonedRepository.findUserId(username)).getLink();
+    }
 }

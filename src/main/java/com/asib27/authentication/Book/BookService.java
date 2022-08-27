@@ -39,5 +39,9 @@ public class BookService {
     public List<Book> getRandomBooks(int count) {
         return bookRepository.getRandomBooks(count);
     }
+
+    public String getLink(Long bookid) {
+        return bookRepository.getReferenceById(bookid).getLink();
+    }
 }
 
