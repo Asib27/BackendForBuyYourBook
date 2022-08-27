@@ -1,11 +1,13 @@
 package com.asib27.authentication.CartItem;
 
+import com.asib27.authentication.Book.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
@@ -40,4 +42,12 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Modifying
     @Query(value = "DELETE FROM cart_item where user_id=?1", nativeQuery = true)
     void delete_cart_items(Long id);
+
+    @Modifying
+    @Query(value = "Call notification_buy_successful(?1)", nativeQuery = true)
+    void updateNotification(Long id);
+
+    @Modifying
+    @Query(value = "Call update_transaction(?1, ?2)", nativeQuery = true)
+    void updateTransaction(Long id, Double totalPrice);
 }

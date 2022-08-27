@@ -1,6 +1,7 @@
 package com.asib27.authentication.Reviews;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -32,4 +33,14 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(value = "(select * from reviews where book_id=?1 and rating >3 order by random() limit (?2)/2) union " +
             "(select * from reviews where book_id=?1 and rating <3 order by random() limit ((?2)-(?2)/2))", nativeQuery = true)
     List<Review>getMixedReviews(Long id, int no);
+
+    @Modifying
+    @Query(value = "Call notification_upvote(?1)", nativeQuery = true)
+    void updateUpvote(Long id);
+
+    @Modifying
+    @Query(value = "Call notification_downvote(?1)", nativeQuery = true)
+    void updateDownvote(Long id);
+
+
 }

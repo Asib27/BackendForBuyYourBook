@@ -38,9 +38,9 @@ public class UserCloned {
     @JoinColumn(name = "location_id", referencedColumnName = "id")
     private Location location;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Transaction transaction;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "user")
+//    private Transaction transaction;
 
 
     @ManyToMany

@@ -21,8 +21,6 @@ public class TransactionController {
     BookService bookService;
     @Autowired
     UserClonedService userClonedService;
-//    @Autowired
-//    PaymentService paymentService;
     @Autowired
     LocationService locationService;
 
@@ -48,13 +46,13 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-    @PostMapping("/add/{tx_id}/book/{b_id}")
-    public Transaction addBookToTransaction(@PathVariable Long tx_id,@PathVariable Long b_id){
-        Book book = bookService.getBook(b_id);
-        Transaction transaction = transactionService.findTransactionByID(tx_id);
-        transaction.addBook(book);
-        return transactionService.addTransaction(transaction);
-    }
+//    @PostMapping("/add/{tx_id}/book/{b_id}")
+//    public Transaction addBookToTransaction(@PathVariable Long tx_id,@PathVariable Long b_id){
+//        Book book = bookService.getBook(b_id);
+//        Transaction transaction = transactionService.findTransactionByID(tx_id);
+//        transaction.addBook(book);
+//        return transactionService.addTransaction(transaction);
+//    }
 
     @PostMapping("/add/{tx_id}/user/{u_id}")
     public Transaction addUserToTransaction(@PathVariable Long tx_id,@PathVariable Long u_id){
@@ -64,13 +62,6 @@ public class TransactionController {
         return transactionService.addTransaction(transaction);
     }
 
-//    @PostMapping("/add/{tx_id}/payment/{u_id}")
-//    public Transaction addPayment(@PathVariable Long tx_id,@PathVariable Long u_id){
-//        Payment payment = paymentService.findPaymentById(u_id);
-//        Transaction transaction = transactionService.findTransactionByID(tx_id);
-//        transaction.setPayment(payment);
-//        return transactionService.addTransaction(transaction);
-//    }
 
     @PostMapping("/add/{tx_id}/location/{u_id}")
     public Transaction addLocationOfTransaction(@PathVariable Long tx_id,@PathVariable Long u_id){

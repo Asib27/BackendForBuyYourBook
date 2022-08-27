@@ -17,7 +17,7 @@ public class CartItemController {
     @Autowired
     UserClonedService userClonedService;
 
-
+    Double totalPrice = 0.0;
 
     @PostMapping("/add")
     public CartItem addNewCartItem(@RequestParam Long bookId, @RequestParam(defaultValue = "1") Integer quantity){
@@ -64,7 +64,8 @@ public class CartItemController {
 
         UserCloned user = userClonedService.getCurrentUser();
         try {
-            return cartItemService.getDisountedTotal(user, couponId);
+            totalPrice = cartItemService.getDiscountedTotal(user, couponId);
+            return totalPrice;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -74,8 +75,11 @@ public class CartItemController {
     @PostMapping("/buy")
     public void buyCartItems(){
         UserCloned user = userClonedService.getCurrentUser();
+        if(totalPrice == 0.0) totalPrice = getTotalPrice();
         cartItemService.reduce_the_count_of_cartBooks(user);
         cartItemService.delete_cart_items(user);
+        cartItemService.updateNotification(user);
+        cartItemService.updateTransactionTable(user,totalPrice);
     }
 
 

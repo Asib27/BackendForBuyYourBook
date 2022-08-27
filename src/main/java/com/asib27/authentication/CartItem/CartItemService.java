@@ -4,6 +4,7 @@ import com.asib27.authentication.Book.BookService;
 import com.asib27.authentication.Coupon.Coupon;
 import com.asib27.authentication.Coupon.CouponService;
 import com.asib27.authentication.UserCloned.UserCloned;
+import com.asib27.authentication.UserCloned.UserClonedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class CartItemService {
     BookService bookService;
     @Autowired
     CouponService couponService;
+    @Autowired
+    UserClonedService userClonedService;
 
 
     public CartItem addNewCartItem(Long bookId, UserCloned user, Integer quantity) {
@@ -52,15 +55,16 @@ public class CartItemService {
     }
 
     public Double getTotalPrice(UserCloned user) {
-        return cartItemRepository.getTotalPrice(user.getId());
+        return   cartItemRepository.getTotalPrice(user.getId());
     }
 
-    public Double getDisountedTotal(UserCloned user, Long couponId) throws IllegalAccessException {
+    public Double getDiscountedTotal(UserCloned user, Long couponId) throws IllegalAccessException {
         Coupon coupon = couponService.getCoupon(couponId);
         if(coupon.getStatus() == "invalid" ){
             throw new IllegalAccessException("the coupon is invalid !!");
         }else {
             return cartItemRepository.getDisountedTotal(user.getId(), coupon.getDiscount());
+
         }
 
     }
@@ -73,5 +77,15 @@ public class CartItemService {
     @Transactional
     public void delete_cart_items(UserCloned user) {
         cartItemRepository.delete_cart_items(user.getId());
+    }
+
+    @Transactional
+    public void updateNotification(UserCloned user) {
+        cartItemRepository.updateNotification(user.getId());
+    }
+
+    @Transactional
+    public void updateTransactionTable(UserCloned user, Double totalPrice) {
+        cartItemRepository.updateTransaction(user.getId(), totalPrice);
     }
 }

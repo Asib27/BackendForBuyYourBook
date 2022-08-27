@@ -2,6 +2,7 @@ package com.asib27.authentication.Reviews;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -57,5 +58,15 @@ public class ReviewService {
 
     public List<Review> getMixedReviews(Long id, int no) {
         return reviewRepository.getMixedReviews(id, no);
+    }
+
+    @Transactional
+    public void updateUpvoteNotification(Long id) {
+        reviewRepository.updateUpvote(id);
+    }
+
+    @Transactional
+    public void updateDownVoteNotification(Long id) {
+        reviewRepository.updateDownvote(id);
     }
 }
