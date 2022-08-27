@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -18,12 +19,18 @@ public class BookService {
 
     public Book addNewBook(Book book) {
         return bookRepository.save(book);
-
     }
 
     public String getBookIdByName(String book_name){
         return bookRepository.getBookIdByName(book_name);
     }
+
+    public Optional<Book> getBookByIsbn(String isbn){
+        System.out.println(isbn);
+        System.out.println(bookRepository.findById(isbn));
+        return bookRepository.findById(isbn);
+    }
+
     public void deleteBook(String bookname) {
         bookRepository.deleteById(bookname);
     }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -41,6 +42,14 @@ public class BookController {
         String x = bookService.getBookIdByName(book_name);
         // System.out.println(x);
         return x;
+    }
+
+    @GetMapping("/{isbn}")
+    public Optional<Book> getBookByIsbn(@PathVariable String isbn){
+        // System.out.println("called" + book_name);
+        Optional<Book> book = bookService.getBookByIsbn(isbn);
+        // System.out.println(x);
+        return book;
     }
 
     @PostMapping("/add")
