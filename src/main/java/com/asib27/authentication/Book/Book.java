@@ -3,7 +3,6 @@ package com.asib27.authentication.Book;
 
 import com.asib27.authentication.Publisher.Publisher;
 import com.asib27.authentication.Reviews.Review;
-import com.asib27.authentication.Transaction.Transaction;
 import com.asib27.authentication.Writer.Writer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,8 +16,6 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(
             name = "isbn"
     )
@@ -81,10 +78,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private Set<Review> reviews = new HashSet<>();
 
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "booksInTransaction")
-    private Set<Transaction>transactionBooks = new HashSet<>();
 
     public Book() {
     }
@@ -186,13 +179,7 @@ public class Book {
         return publisher;
     }
 
-    public Set<Transaction> getTransactionBooks() {
-        return transactionBooks;
-    }
 
-    public void setTransactionBooks(Set<Transaction> transactionBooks) {
-        this.transactionBooks = transactionBooks;
-    }
 
     public void addReview(Review review){
         reviews.add(review);
