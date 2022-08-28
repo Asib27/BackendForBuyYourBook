@@ -35,9 +35,14 @@ public class ReviewService {
         }
     }
 
-    public float getAvgRatingByBookName(String id) {
-
-        return reviewRepository.getAvgRatingByBookName(id);
+    public double getAvgRatingByIsbn(String isbn) {
+        if(reviewRepository.getReviewCountByBookName(isbn) != 0){
+            return reviewRepository.getAvgRatingByIsbn(isbn);
+        }
+        else{
+            return 0.0;
+        }
+        
     }
 
     public int getReviewCountByBookName(String id) {

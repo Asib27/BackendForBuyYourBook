@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query(value = "select avg(rating) from reviews where book_id=?1", nativeQuery = true)
-    float getAvgRatingByBookName(String id);
+    double getAvgRatingByIsbn(String id);
 
     @Query(value = "select count (*) " +
             "from reviews where book_id=?1", nativeQuery = true)

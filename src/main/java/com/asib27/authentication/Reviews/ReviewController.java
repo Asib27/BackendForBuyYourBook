@@ -78,8 +78,8 @@ public class ReviewController {
     }
 
     @GetMapping("/rating/average_rating")
-    public float getAvgRatingByBookId(@PathVariable String isbn){
-        float x =  reviewService.getAvgRatingByBookName(isbn);
+    public double getAvgRatingByBookId(@PathVariable String isbn){
+        double x =  reviewService.getAvgRatingByIsbn(isbn);
         return x;
     }
     @GetMapping("/rating/count")
