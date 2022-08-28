@@ -2,6 +2,7 @@ package com.asib27.authentication.Reviews;
 
 import com.asib27.authentication.Book.Book;
 import com.asib27.authentication.Book.BookService;
+import com.asib27.authentication.UserCloned.UserCloned;
 import com.asib27.authentication.UserCloned.UserClonedService;
 import com.asib27.authentication.payload.response.ReviewResponse;
 
@@ -27,9 +28,10 @@ public class ReviewController {
 
     private List<ReviewResponse> getReviewResponseList(List<Review> list){
         List<ReviewResponse> ans = new  ArrayList<>(list.size());
-
+        UserCloned user;
         for (int i = 0; i < list.size(); i++) {
-            ans.add(i, new ReviewResponse(list.get(i)) );
+            user = userClonedService.getAnUser(list.get(i).getUser_id());
+            ans.add(i, new ReviewResponse(list.get(i),user) );
         }
 
         return ans;
@@ -67,6 +69,13 @@ public class ReviewController {
         review.setUpvotes(review.getUpvotes()+1);
         reviewService.updateUpvoteNotification(review.getUser_id());
         return reviewService.addNewReview(review);
+    }
+
+    @GetMapping("/review/get/info")
+    public ReviewResponse getAllAboutReview(@RequestParam Long review_id){
+        Review review = reviewService.getReview(review_id);
+        UserCloned user = userClonedService.getAnUser(review.getUser_id());
+        return reviewService.getAllAboutReview(review, user);
     }
 
     @PostMapping("/review/downvote/{review_id}")

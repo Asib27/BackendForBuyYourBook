@@ -2,6 +2,7 @@ package com.asib27.authentication.UserCloned;
 
 import com.asib27.authentication.Locations.Location;
 import com.asib27.authentication.Locations.LocationService;
+import com.asib27.authentication.payload.request.UserPersonalInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,14 @@ public class UserClonedController {
     public String addUser(@RequestBody UserCloned user){
         userClonedService.addNewUser(user);
         return "new user added";
+    }
+
+    @PostMapping("/add/personal")
+    public String addPersonalInfo(@RequestBody UserPersonalInfoRequest userPersonalInfo)
+    {
+        UserCloned user = userClonedService.getCurrentUser();
+        userClonedService.addPersonalInfo(user, userPersonalInfo);
+        return "personal info added !!";
     }
 
     @GetMapping("/get")

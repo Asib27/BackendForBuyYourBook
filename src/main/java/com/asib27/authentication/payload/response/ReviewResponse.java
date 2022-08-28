@@ -2,7 +2,9 @@ package com.asib27.authentication.payload.response;
 
 import java.sql.Timestamp;
 
+import com.asib27.authentication.Book.Book;
 import com.asib27.authentication.Reviews.Review;
+import com.asib27.authentication.UserCloned.UserCloned;
 
 public class ReviewResponse {
 
@@ -12,16 +14,18 @@ public class ReviewResponse {
     private String review_text;
     private int rating;
     private Timestamp addDate;
-    private Long user_id;
-  
-    public ReviewResponse(Review review){
+    private Book book;
+    private UserCloned user;
+
+    public ReviewResponse(Review review, UserCloned user){
         id = review.getId();
         upVotes = review.getUpvotes();
         downVotes = review.getDownvotes();
         review_text = review.getReview_text();
         rating = review.getRating();
         addDate = review.getAddDate();
-        user_id = review.getUser_id();
+        this.user = user;
+        book = review.getBook();
     }
 
 
@@ -73,12 +77,20 @@ public class ReviewResponse {
         this.addDate = addDate;
     }
 
-    public Long getUser_name() {
-        return this.user_id;
+
+    public Book getBook() {
+        return book;
     }
 
-    public void setUser_name(Long user_name) {
-        this.user_id = user_name;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
+    public UserCloned getUser() {
+        return user;
+    }
+
+    public void setUser(UserCloned user) {
+        this.user = user;
+    }
 }

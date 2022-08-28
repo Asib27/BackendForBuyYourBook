@@ -1,5 +1,7 @@
 package com.asib27.authentication.Reviews;
 
+import com.asib27.authentication.UserCloned.UserCloned;
+import com.asib27.authentication.payload.response.ReviewResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,5 +70,9 @@ public class ReviewService {
     @Transactional
     public void updateDownVoteNotification(Long id) {
         reviewRepository.updateDownvote(id);
+    }
+
+    public ReviewResponse getAllAboutReview(Review review, UserCloned user) {
+        return new ReviewResponse(review, user);
     }
 }
