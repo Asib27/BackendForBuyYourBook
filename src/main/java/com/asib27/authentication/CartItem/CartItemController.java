@@ -60,7 +60,7 @@ public class CartItemController {
         return cartItemService.getTotalPrice(user);
     }
 
-    @GetMapping("/totalPriceWithDiscount")
+    @GetMapping("/applyCoupon")
     public Double getPriceWithDiscount(@RequestParam Long couponId)  {
 
         UserCloned user = userClonedService.getCurrentUser();
