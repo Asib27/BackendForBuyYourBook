@@ -48,6 +48,13 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
+    @PostMapping("/change/rating")
+    public Review change_rating(@RequestParam Long review_id, @RequestParam int rating){
+        Review review = reviewService.getReview(review_id);
+        review.setRating(rating);
+        return reviewService.addNewReview(review);
+    }
+
     @PostMapping("/add/{review_id}/up")
     public Review upVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
