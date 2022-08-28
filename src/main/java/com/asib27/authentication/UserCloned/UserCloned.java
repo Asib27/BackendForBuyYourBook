@@ -2,8 +2,6 @@ package com.asib27.authentication.UserCloned;
 
 
 import com.asib27.authentication.Locations.Location;
-import com.asib27.authentication.Reviews.Review;
-import com.asib27.authentication.Transaction.Transaction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

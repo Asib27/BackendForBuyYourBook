@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/userCloned")
+@RequestMapping("/api/user")
 public class UserClonedController {
 
     @Autowired
@@ -23,17 +23,17 @@ public class UserClonedController {
         return "new user added";
     }
 
-    @GetMapping("/get")
+    @GetMapping("/all")
     public List<UserCloned> getAllUsers(){
         return userClonedService.getAllUsers();
     }
 
-    @GetMapping("/get/{userid}")
+    @GetMapping("/{userid}")
     public UserCloned getAnUser(@PathVariable Long userid){
         return userClonedService.getAnUser(userid);
     }
 
-    @GetMapping("/get/currentUser")
+    @GetMapping("/currentUser")
     public UserCloned getCurrentUser(){
         return userClonedService.getCurrentUser();
     }
@@ -46,7 +46,7 @@ public class UserClonedController {
         user.setLocation(location);
         return userClonedService.addNewUser(user);
     }
-    @PostMapping("/add/{user_id}/follows/{id}")
+    @PostMapping("/{user_id}/follows/{id}")
     public UserCloned follower(@PathVariable Long user_id, @PathVariable Long id){
         UserCloned user = userClonedService.getAnUser(user_id);
         UserCloned user1 = userClonedService.getAnUser(id);
@@ -55,13 +55,13 @@ public class UserClonedController {
         return userClonedService.addNewUser(user);
     }
 
-    @PostMapping("/addLink")
-    public String addImageLink(@RequestParam String username, @RequestParam String link){
-        userClonedService.addLink(username, link);
+    @PostMapping("/edit")
+    public String addImageLink(@RequestParam String username, @RequestParam String imageLink){
+        userClonedService.addLink(username, imageLink);
         return "link added";
     }
 
-    @GetMapping("/getLink")
+    @GetMapping("/image")
     public String getLink(@RequestParam String username){
         return userClonedService.getLink(username);
     }
