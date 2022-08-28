@@ -39,7 +39,7 @@ public class UserClonedService {
     public UserCloned getCurrentUser(){
         String name = getUserName();
         Long id = userClonedRepository.findUserId(name);
-        System.out.println("User id is : "+ id);
+        System.out.println("User id is : "+ id + name);
         return getAnUser(id);
     }
 
