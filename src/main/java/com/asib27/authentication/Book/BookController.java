@@ -96,5 +96,13 @@ public class BookController {
     public String getBookImageLink(@RequestParam String bookName){
         return bookService.getLink(bookName);
     }
+
+    @PostMapping("/add/description")
+    public String addDescription(@RequestParam String isbn, @RequestParam String description){
+        Book book = bookService.getBookData(isbn);
+        book.setDescription(description);
+        bookService.addNewBook(book);
+        return "description added ! ";
+    }
 }
 

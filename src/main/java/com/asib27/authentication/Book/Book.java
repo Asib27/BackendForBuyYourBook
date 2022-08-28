@@ -65,6 +65,9 @@ public class Book {
     )
     private String link;
 
+    @Column(name = "description")
+    private String description;
+
 
     @ManyToMany
     @JoinTable(name = "authorOfBooks",
@@ -89,20 +92,22 @@ public class Book {
 
     public Book(String name, int edition,
                 String language, String genre, int price,
-                int quantity_available) {
+                int quantity_available,String link, String des) {
         this.name = name;
         this.edition = edition;
         this.language = language;
         this.genre = genre;
         this.price = price;
+        this.link = link;
         this.quantity_available = quantity_available;
+        this.description = des;
     }
 
 
 
     public Book(String isbn, String name, int edition,
                 String language, String genre, int price,
-                int quantity_available, String link) {
+                int quantity_available, String link, String description) {
         this.id = isbn;
         this.name = name;
         this.edition = edition;
@@ -111,6 +116,7 @@ public class Book {
         this.price = price;
         this.quantity_available = quantity_available;
         this.link = link;
+        this.description = description;
     }
 
     public String getIsbn() {
@@ -199,5 +205,13 @@ public class Book {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

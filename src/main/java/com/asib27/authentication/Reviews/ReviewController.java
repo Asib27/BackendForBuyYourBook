@@ -2,11 +2,14 @@ package com.asib27.authentication.Reviews;
 
 import com.asib27.authentication.Book.Book;
 import com.asib27.authentication.Book.BookService;
+import com.asib27.authentication.UserCloned.UserCloned;
 import com.asib27.authentication.UserCloned.UserClonedService;
+import com.asib27.authentication.payload.response.ReviewResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +26,16 @@ public class ReviewController {
     @Autowired
     UserClonedService userClonedService;
 
-    private List<Review> getReviewResponseList(List<Review> list){
-        return list;
+
+    private List<ReviewResponse> getReviewResponseList(List<Review> list){
+        List<ReviewResponse> ans = new  ArrayList<>(list.size());
+        UserCloned user;
+        for (int i = 0; i < list.size(); i++) {
+            user = userClonedService.getAnUser(list.get(i).getUser_id());
+            ans.add(i, new ReviewResponse(list.get(i),user) );
+        }
+
+        return ans;
     }
 
     @PostMapping("/book/{isbn}/review/add")
@@ -35,7 +46,7 @@ public class ReviewController {
     }
 
     @GetMapping("/book/{isbn}/review/all")
-    public List<Review> getReViewByBookId(@PathVariable String isbn){
+    public List<ReviewResponse> getReViewByBookId(@PathVariable String isbn){
         return getReviewResponseList(reviewService.getReviewByBookId(isbn));
     }
 
@@ -61,11 +72,25 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
+    @GetMapping("/review/get/info")
+    public ReviewResponse getAllAboutReview(@RequestParam Long review_id){
+        Review review = reviewService.getReview(review_id);
+        UserCloned user = userClonedService.getAnUser(review.getUser_id());
+        return reviewService.getAllAboutReview(review, user);
+    }
+
     @PostMapping("/review/downvote/{review_id}")
     public Review downVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
         review.setDownvotes(review.getDownvotes() + 1);
         reviewService.updateDownVoteNotification(review.getUser_id());
+        return reviewService.addNewReview(review);
+    }
+
+    @PostMapping("/review/change/rating")
+    public Review changeRating(@RequestParam Long review_id, @RequestParam int rating){
+        Review review = reviewService.getReview(review_id);
+        review.setRating(rating);
         return reviewService.addNewReview(review);
     }
 
@@ -102,7 +127,7 @@ public class ReviewController {
 
 
     @GetMapping("/book/{isbn}/review")
-    public List<Review> getTypeBasedReviews(@PathVariable String isbn, 
+    public List<ReviewResponse> getTypeBasedReviews(@PathVariable String isbn, 
         @RequestParam(name="type", defaultValue = "mixed") String type, 
         @RequestParam(name="count", defaultValue = "5") int count
     ){

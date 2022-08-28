@@ -1,5 +1,6 @@
 package com.asib27.authentication.UserCloned;
 
+import com.asib27.authentication.payload.request.UserPersonalInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,22 @@ public class UserClonedService {
 
     public String getLink(String username) {
         return userClonedRepository.getReferenceById(userClonedRepository.findUserId(username)).getLink();
+    }
+
+    public void addPersonalInfo(UserCloned user, UserPersonalInfoRequest userPersonalInfo) {
+        if(userPersonalInfo.getFirst_name().length() > 0)
+            user.setFirst_name(userPersonalInfo.getFirst_name());
+        if(userPersonalInfo.getMiddle_name().length() > 0)
+            user.setMiddle_name(userPersonalInfo.getMiddle_name());
+        if(userPersonalInfo.getLast_name().length() > 0)
+            user.setLast_name(userPersonalInfo.getLast_name());
+        if(userPersonalInfo.getPhone_number().length() == 11)
+            user.setPhone_number(userPersonalInfo.getPhone_number());
+        if(userPersonalInfo.getBackup_phone_number().length() == 11)
+            user.setBackup_phone_number(userPersonalInfo.getBackup_phone_number());
+
+        userClonedRepository.save(user);
+
+
     }
 }
