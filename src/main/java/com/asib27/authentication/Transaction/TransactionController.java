@@ -46,13 +46,6 @@ public class TransactionController {
         return transactionService.getAllTransactions();
     }
 
-//    @PostMapping("/add/{tx_id}/book/{b_id}")
-//    public Transaction addBookToTransaction(@PathVariable Long tx_id,@PathVariable Long b_id){
-//        Book book = bookService.getBook(b_id);
-//        Transaction transaction = transactionService.findTransactionByID(tx_id);
-//        transaction.addBook(book);
-//        return transactionService.addTransaction(transaction);
-//    }
 
     @PostMapping("/add/{tx_id}/user/{u_id}")
     public Transaction addUserToTransaction(@PathVariable Long tx_id,@PathVariable Long u_id){

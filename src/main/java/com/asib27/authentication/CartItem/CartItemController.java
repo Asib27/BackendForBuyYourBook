@@ -70,6 +70,11 @@ public class CartItemController {
         return cartItemService.getTotalPrice(user);
     }
 
+    @GetMapping("/get/price/discounted")
+    public Double getDiscountedPrice(){
+        return totalPrice;
+    }
+
     @GetMapping("/applyCoupon")
     public Double getPriceWithDiscount(@RequestParam Long couponId)  {
 

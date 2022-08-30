@@ -17,14 +17,6 @@ public class Transaction{
     @Column(name = "tx_id")
     private Long id;
 
-
-//    @ManyToMany
-//    @JoinTable(name = "Books_in_transaction",
-//            joinColumns = @JoinColumn(name = "tx_id"),
-//            inverseJoinColumns = @JoinColumn(name = "isbn")
-//    )
-//    private Set<Book>booksInTransaction = new HashSet<>();
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",  referencedColumnName = "userid")
     private UserCloned user;
@@ -37,6 +29,9 @@ public class Transaction{
 
     @Column(name = "total_price")
     private Double total_price;
+
+//    @Column(name = "time_added")
+
 
 
     public Transaction() {
