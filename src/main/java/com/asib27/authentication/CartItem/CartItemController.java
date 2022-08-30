@@ -57,7 +57,7 @@ public class CartItemController {
     }
 
     @PostMapping("/updateQuantity")
-    public void updateQuantity(@RequestParam Long bookId, @RequestParam(defaultValue = "1") Integer quantity){
+    public void updateQuantity(@RequestParam String bookId, @RequestParam(defaultValue = "1") Integer quantity){
         if(bookId == null) return ;
         UserCloned user = userClonedService.getCurrentUser();
         cartItemService.updateQuantity(bookId,user, quantity);

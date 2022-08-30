@@ -24,7 +24,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Modifying
     @Query(value = "UPDATE cart_item SET quantity=?3 WHERE (book_id=?1 AND user_id=?2);", nativeQuery = true)
-    void updateQuantity(Long bookId, Long id, Integer quantity);
+    void updateQuantity(String bookId, Long id, Integer quantity);
 
     @Query(value = "select sum(b.price*c.quantity) from books b join cart_item c on b.isbn = c.book_id where c.user_id=?1", nativeQuery = true)
     Double getTotalPrice(Long id);

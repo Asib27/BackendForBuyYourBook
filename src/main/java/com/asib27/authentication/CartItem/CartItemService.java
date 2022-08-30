@@ -52,7 +52,7 @@ public class CartItemService {
     }
 
     @Transactional
-    public void updateQuantity(Long bookId, UserCloned user, Integer quantity) {
+    public void updateQuantity(String bookId, UserCloned user, Integer quantity) {
         cartItemRepository.updateQuantity(bookId, user.getId(), quantity);
     }
 
