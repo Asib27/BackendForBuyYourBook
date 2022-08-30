@@ -44,10 +44,10 @@ public class CartItemController {
     }
 
     @DeleteMapping("/remove")
-    public void removeBook(@RequestParam String bookId){
-        if(bookId == null )return;
+    public void removeBook(@RequestParam String isbn){
+        if(isbn == null )return;
         UserCloned user = userClonedService.getCurrentUser();
-        cartItemService.remove(bookId, user);
+        cartItemService.remove(isbn, user);
     }
 
     @DeleteMapping("/removeAll")
@@ -88,7 +88,7 @@ public class CartItemController {
         UserCloned user = userClonedService.getCurrentUser();
         if(totalPrice == 0.0) totalPrice = getTotalPrice();
         cartItemService.reduce_the_count_of_cartBooks(user);
-        cartItemService.delete_cart_items(user);
+        cartItemService.updateBuyItems(user.getId());
         cartItemService.updateNotification(user);
         cartItemService.updateTransactionTable(user,totalPrice);
     }

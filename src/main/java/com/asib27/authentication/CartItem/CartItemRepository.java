@@ -38,17 +38,18 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
                    "where user_id = ?1) as table1 where isbn = table1.id;", nativeQuery = true)
     void reduce_the_count_of_cartBooks(Long user_id);
 
-    @Modifying
-    @Query(value = "DELETE FROM cart_item where user_id=?1", nativeQuery = true)
-    void delete_cart_items(Long id);
 
     @Modifying
-    @Query(value = "Call notification_buy_successful(?1)", nativeQuery = true)
+    @Query(value = "Call notification_buy_successful(?1, 1)", nativeQuery = true)
     void updateNotification(Long id);
 
     @Modifying
-    @Query(value = "Call update_transaction(?1, ?2)", nativeQuery = true)
+    @Query(value = "Call update_transaction(?1, ?2 ,1)", nativeQuery = true)
     void updateTransaction(Long id, Double totalPrice);
+
+    @Modifying
+    @Query(value = "call buy_items(?1,?2,?3,0)", nativeQuery = true)
+    void updateBuyItems(Long user_id, String book_id, int quantity);
 
     @Query(value = "select id from cart_item where user_id = ?1", nativeQuery = true)
     List<Object[]> getAllCartId(Long id);
@@ -58,6 +59,9 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     @Query(value = "select get_author(?1)", nativeQuery = true)
     String getAuthor(BigInteger x);
+
+    @Query(value = "select user_id, book_id, quantity from cart_item  where user_id = ?1", nativeQuery = true)
+    List<Object[]> getData(Long user_id);
 
 //    @Query(value = "select get_object_fields(?1)", nativeQuery = true)
 //    Map<String, ?> getAnItem(Long cart_id);

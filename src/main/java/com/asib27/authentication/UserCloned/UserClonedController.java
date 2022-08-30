@@ -39,6 +39,12 @@ public class UserClonedController {
         return userClonedService.getPersonalInfo(userClonedService.getCurrentUser().getId());
     }
 
+    @GetMapping("/get/location")
+    public Location getLocation(){
+        UserCloned user = getCurrentUser();
+        return user.getLocation();
+    }
+
     @GetMapping("/get/about")
     public AboutYouRequest getAbout(){
         return userClonedService.aboutRequest(userClonedService.getCurrentUser().getId());

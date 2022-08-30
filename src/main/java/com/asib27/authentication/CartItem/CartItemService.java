@@ -77,8 +77,12 @@ public class CartItemService {
     }
 
     @Transactional
-    public void delete_cart_items(UserCloned user) {
-        cartItemRepository.delete_cart_items(user.getId());
+    public void updateBuyItems(Long user_id) {
+        List<Object[]> getdata = cartItemRepository.getData(user_id);
+        for(Object[] x: getdata) {
+            cartItemRepository.updateBuyItems(user_id, (String)x[1], (Integer)x[2]);
+            cartItemRepository.removeBook((String)x[1], user_id);
+        }
     }
 
     @Transactional
