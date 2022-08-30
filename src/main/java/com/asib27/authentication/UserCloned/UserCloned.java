@@ -41,6 +41,16 @@ public class UserCloned {
     @Column(name = "backup_phone_number", length = 11)
     private String backup_phone_number;
 
+    @Column(name = "about_user")
+    private String description;
+
+    @Column(name = "favourite_books")
+    private String fav_books;
+
+
+    @Column(name="favourite_genre")
+    private String fav_genre;
+
     public UserCloned(String username, String email) {
         this.username = username;
         this.email = email;
@@ -154,5 +164,29 @@ public class UserCloned {
 
     public void setBackup_phone_number(String backup_phone_number) {
         this.backup_phone_number = backup_phone_number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getFav_books() {
+        return fav_books;
+    }
+
+    public void setFav_books(String fav_books) {
+        this.fav_books = fav_books;
+    }
+
+    public String getFav_genre() {
+        return fav_genre;
+    }
+
+    public void setFav_genre(String fav_genre) {
+        this.fav_genre = fav_genre;
     }
 }

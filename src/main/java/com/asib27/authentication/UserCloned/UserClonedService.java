@@ -1,5 +1,6 @@
 package com.asib27.authentication.UserCloned;
 
+import com.asib27.authentication.payload.request.AboutYouRequest;
 import com.asib27.authentication.payload.request.UserPersonalInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,5 +70,13 @@ public class UserClonedService {
         userClonedRepository.save(user);
 
 
+    }
+
+    public void addAboutInfo(AboutYouRequest aboutYou, UserCloned user) {
+        user.setDescription(aboutYou.getDescription());
+        user.setFav_books(aboutYou.getFav_books());
+        user.setFav_genre(aboutYou.getFav_genre());
+
+        userClonedRepository.save(user);
     }
 }

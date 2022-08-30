@@ -79,6 +79,13 @@ public class ReviewController {
         return reviewService.getAllAboutReview(review, user);
     }
 
+    @PostMapping("/review/change/rating")
+    public Review changeRating(@RequestParam Long review_id, @RequestParam int rating){
+        Review review = reviewService.getReview(review_id);
+        review.setRating(rating);
+        return reviewService.addNewReview(review);
+    }
+
     @PostMapping("/review/downvote/{review_id}")
     public Review downVoteReview(@PathVariable Long review_id){
         Review review = reviewService.getReview(review_id);
@@ -87,12 +94,6 @@ public class ReviewController {
         return reviewService.addNewReview(review);
     }
 
-    @PostMapping("/review/change/rating")
-    public Review changeRating(@RequestParam Long review_id, @RequestParam int rating){
-        Review review = reviewService.getReview(review_id);
-        review.setRating(rating);
-        return reviewService.addNewReview(review);
-    }
 
     @GetMapping("/book/{isbn}/rating/average_rating")
     public double getAvgRatingByBookId(@PathVariable String isbn){

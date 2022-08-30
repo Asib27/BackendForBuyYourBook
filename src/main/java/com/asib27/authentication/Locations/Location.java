@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "Locations")
-@Entity
+@Entity(name = "Locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,28 +26,18 @@ public class Location {
 
     @Column(
             nullable = false,
-            length = 10,
-            name = "postal_code"
-    )
-    private String postal_code;
-    @Column(
-            nullable = false,
             length = 50,
             name = "district"
     )
     private String District;
 
-    public Location(String street, String postal_code, String district) {
-        this.street = street;
-        this.postal_code = postal_code;
-        District = district;
-    }
+    @Column(name = "country")
+    private String country;
 
-    public Location(Long id, String street, String postal_code, String district) {
-        this.id = id;
+    public Location(String street, String district, String country) {
         this.street = street;
-        this.postal_code = postal_code;
         District = district;
+        this.country = country;
     }
 
     public Location() {
@@ -82,14 +72,6 @@ public class Location {
         this.street = street;
     }
 
-    public String getPostal_code() {
-        return postal_code;
-    }
-
-    public void setPostal_code(String postal_code) {
-        this.postal_code = postal_code;
-    }
-
     public String getDistrict() {
         return District;
     }
@@ -106,4 +88,11 @@ public class Location {
         return usersInLocation;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }

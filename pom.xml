@@ -73,8 +73,13 @@
 			<artifactId>stripe-java</artifactId>
 			<version>21.2.0</version>
 		</dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.6</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>

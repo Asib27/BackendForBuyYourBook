@@ -5,6 +5,7 @@ import com.asib27.authentication.UserCloned.UserCloned;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Table(name = "reviews")
 @Entity(name = "reviews")
@@ -56,6 +57,15 @@ public class Review {
         this.review_text = review_text;
         this.rating = rating;
         this.addDate = addDate;
+    }
+
+    public Review(String review_text, int rating){
+        upVotes = 0;
+        downVotes = 0;
+        this.review_text = review_text;
+        this.rating = rating;
+        Date date = new Date();
+        addDate = new Timestamp((date.getTime()));
     }
 
     public Review() {
