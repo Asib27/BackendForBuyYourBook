@@ -44,7 +44,7 @@ public class CartItemController {
     }
 
     @DeleteMapping("/remove")
-    public void removeBook(@RequestParam Long bookId){
+    public void removeBook(@RequestParam String bookId){
         if(bookId == null )return;
         UserCloned user = userClonedService.getCurrentUser();
         cartItemService.remove(bookId, user);

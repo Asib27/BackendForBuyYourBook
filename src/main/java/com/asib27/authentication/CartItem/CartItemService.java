@@ -42,7 +42,7 @@ public class CartItemService {
     }
 
     @Transactional
-    public void remove(Long bookId, UserCloned user) {
+    public void remove(String bookId, UserCloned user) {
         cartItemRepository.removeBook(bookId, user.getId());
     }
 
