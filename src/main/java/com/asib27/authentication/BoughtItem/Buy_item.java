@@ -9,13 +9,13 @@ public class Buy_item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long user_id;
-    private Long book_id;
+    private String book_id;
     private Integer quantity;
 
     public Buy_item() {
     }
 
-    public Buy_item(Long user_id, Long book_id, Integer quantity) {
+    public Buy_item(Long user_id, String book_id, Integer quantity) {
         this.user_id = user_id;
         this.book_id = book_id;
         this.quantity = quantity;
@@ -29,11 +29,11 @@ public class Buy_item {
         this.user_id = user_id;
     }
 
-    public Long getBook_id() {
+    public String getBook_id() {
         return book_id;
     }
 
-    public void setBook_id(Long book_id) {
+    public void setBook_id(String book_id) {
         this.book_id = book_id;
     }
 
