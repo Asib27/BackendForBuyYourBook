@@ -66,12 +66,12 @@ public class UserClonedController {
     }
 
 
-    @PostMapping("/add/Location/{locationid}")
-    public UserCloned addLocation(@PathVariable Long locationid){
-        UserCloned user = userClonedService.getCurrentUser();
-        Location location = locationService.getALocation(locationid);
-        user.setLocation(location);
-        return userClonedService.addNewUser(user);
+    @PostMapping("/add/Location")
+    public UserCloned addLocation(@RequestBody Location location){
+       UserCloned user  = userClonedService.getCurrentUser();
+       Long location_id = locationService.addLocation(location);
+       user.setLocation(locationService.getALocation(location_id));
+       return userClonedService.addNewUser(user);
     }
 
     // add new people to the list of people who are followed by our current user

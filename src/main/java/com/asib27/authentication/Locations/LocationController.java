@@ -19,12 +19,10 @@ public class LocationController {
 
     @PostMapping("/add")
     public String addNewLocation(@RequestBody Location location) {
-        Location location1 = locationService.addLocation(location);
-        UserCloned user = userClonedService.getCurrentUser();
-        user.setLocation(location1);
-        userClonedService.addNewUser(user);
+        locationService.addLocation(location);
         return "New location added!!";
     }
+
 
     @GetMapping("/get")
     public List<Location> getLocations() {

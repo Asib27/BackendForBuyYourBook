@@ -10,8 +10,8 @@ public class LocationService {
     @Autowired
     LocationRepository locationRepository;
 
-    public Location addLocation(Location location) {
-        return locationRepository.save(location);
+    public Long addLocation(Location location) {
+        return locationRepository.getLocationId(location.getCountry(),location.getStreet(),location.getDistrict());
     }
 
     public List<Location> getLocations() {
