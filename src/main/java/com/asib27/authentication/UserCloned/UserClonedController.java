@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/user")
@@ -72,13 +73,28 @@ public class UserClonedController {
         user.setLocation(location);
         return userClonedService.addNewUser(user);
     }
-    @PostMapping("/{user_id}/follows/{id}")
-    public UserCloned follower(@PathVariable Long user_id, @PathVariable Long id){
-        UserCloned user = userClonedService.getAnUser(user_id);
-        UserCloned user1 = userClonedService.getAnUser(id);
 
+    // add new people to the list of people who are followed by our current user
+    @PostMapping("/follows/{id}")
+    public UserCloned follower( @PathVariable Long id){
+        UserCloned user = userClonedService.getCurrentUser();
+        UserCloned user1 = userClonedService.getAnUser(id);
         user.whomFollows(user1);
         return userClonedService.addNewUser(user);
+    }
+
+    // list of people followed by our current user
+    @GetMapping("/get/whomFollows")
+    public Set<UserCloned> whomFollows(){
+        UserCloned user = userClonedService.getCurrentUser();
+        return user.getFollows();
+    }
+
+    // list of people who follows our current user
+    @GetMapping("/get/followedBy")
+    public Set<UserCloned> followedBy()
+    {
+        return userClonedService.getCurrentUser().getFollowedby();
     }
 
     @PostMapping("/edit")
