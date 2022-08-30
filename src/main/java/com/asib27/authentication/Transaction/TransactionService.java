@@ -30,6 +30,11 @@ public class TransactionService {
         }
     }
 
+    public Transaction getLatestTransaction(){
+        Long id = transactionRepository.getLatestTransactionId();
+        return findTransactionByID(id);
+    }
+
     public boolean deleteTransaction(Long tx_id){
         boolean exists = transactionRepository.existsById(tx_id);
         if(!exists){
