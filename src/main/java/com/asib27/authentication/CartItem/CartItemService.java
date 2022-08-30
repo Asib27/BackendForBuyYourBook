@@ -107,10 +107,11 @@ public class CartItemService {
             List<Object[]> partial = cartItemRepository.getPartial(x);
 
             String author = cartItemRepository.getAuthor(x);
-            cartItemHelper.setName((String) partial.get(0)[0]);
-            cartItemHelper.setPrice((int) partial.get(0)[1]);
-            cartItemHelper.setLink((String) partial.get(0)[2]);
-            cartItemHelper.setQuantity((int) partial.get(0)[3]);
+            cartItemHelper.setIsbn((String) partial.get(0)[0]);
+            cartItemHelper.setName((String) partial.get(0)[1]);
+            cartItemHelper.setPrice((int) partial.get(0)[2]);
+            cartItemHelper.setLink((String) partial.get(0)[3]);
+            cartItemHelper.setQuantity((int) partial.get(0)[4]);
             cartItemHelper.setAuthor_name(author);
             itemList.add(cartItemHelper);
         }

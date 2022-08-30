@@ -1,18 +1,17 @@
 package com.asib27.authentication.CartItem;
 
-import com.asib27.authentication.Book.Book;
-import com.asib27.authentication.Writer.Writer;
-
 public class CartItemHelper {
 
+    private String isbn;
     private String name;
     private int price;
     private String link;
     private String author_name;
     private int quantity;
 
-    public CartItemHelper(String name, int price, String link,
+    public CartItemHelper(String isbn, String name, int price, String link,
                           String author_name, int quantity) {
+        this.isbn = isbn;
         this.name = name;
         this.price = price;
         this.link = link;
@@ -21,6 +20,14 @@ public class CartItemHelper {
     }
 
     public CartItemHelper() {
+    }
+
+    public String getIsbn(){
+        return isbn;
+    }
+    
+    public void setIsbn(String isbn){
+        this.isbn = isbn;
     }
 
     public String getName() {

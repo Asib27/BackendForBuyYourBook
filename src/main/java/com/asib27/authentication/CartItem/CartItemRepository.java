@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
@@ -54,7 +53,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Query(value = "select id from cart_item where user_id = ?1", nativeQuery = true)
     List<Object[]> getAllCartId(Long id);
 
-    @Query(value = "select b.name, b.price, b.link, c.quantity from books b join cart_item c on(b.isbn = c.book_id) where c.id = ?1",nativeQuery = true)
+    @Query(value = "select b.isbn, b.name, b.price, b.link, c.quantity from books b join cart_item c on(b.isbn = c.book_id) where c.id = ?1",nativeQuery = true)
     List<Object[]> getPartial(BigInteger x);
 
     @Query(value = "select get_author(?1)", nativeQuery = true)
