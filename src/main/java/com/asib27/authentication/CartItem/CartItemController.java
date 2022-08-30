@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -31,6 +32,16 @@ public class CartItemController {
     public List<Object[]> getAllBooksInCart(){
         UserCloned user = userClonedService.getCurrentUser();
         return cartItemService.getAll(user);
+    }
+
+//    @GetMapping("/get/data")
+//    public Map<String,?> getAnItem(@RequestParam Long cart_id){
+//        return cartItemService.getAnItem(cart_id);
+//    }
+
+    @GetMapping("/get/data")
+    public List<CartItemHelper> getItemList(){
+        return cartItemService.getItemList(userClonedService.getCurrentUser().getId());
     }
 
     @DeleteMapping("/remove")

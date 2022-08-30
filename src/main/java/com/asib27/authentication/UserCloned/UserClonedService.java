@@ -79,4 +79,27 @@ public class UserClonedService {
 
         userClonedRepository.save(user);
     }
+
+    public UserPersonalInfoRequest getPersonalInfo(Long id) {
+
+        List<Object[]> getData = userClonedRepository.getPersonalInfo(id);
+        UserPersonalInfoRequest userPersonal= new UserPersonalInfoRequest();
+        userPersonal.setFirst_name((String) getData.get(0)[0]);
+        userPersonal.setMiddle_name((String) getData.get(0)[1]);
+        userPersonal.setLast_name((String) getData.get(0)[2]);
+        userPersonal.setPhone_number((String) getData.get(0)[3]);
+        userPersonal.setBackup_phone_number((String) getData.get(0)[4]);
+
+        return userPersonal;
+    }
+
+    public AboutYouRequest aboutRequest(Long id) {
+        List<Object[]> getData = userClonedRepository.getAboutInfo(id);
+        AboutYouRequest about = new AboutYouRequest();
+        about.setDescription((String) getData.get(0)[0]);
+        about.setFav_books((String) getData.get(0)[1]);
+        about.setFav_genre((String) getData.get(0)[2]);
+
+        return about;
+    }
 }

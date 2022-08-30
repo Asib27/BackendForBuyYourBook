@@ -32,6 +32,16 @@ public class UserClonedController {
         userClonedService.addPersonalInfo(user, userPersonalInfo);
         return "personal info added !!";
     }
+
+    @GetMapping("/get/personal")
+    public UserPersonalInfoRequest getPersonalInfo(){
+        return userClonedService.getPersonalInfo(userClonedService.getCurrentUser().getId());
+    }
+
+    @GetMapping("/get/about")
+    public AboutYouRequest getAbout(){
+        return userClonedService.aboutRequest(userClonedService.getCurrentUser().getId());
+    }
     @PostMapping("/add/about")
     public String addAboutInfo(@RequestBody AboutYouRequest aboutYou){
         UserCloned user = userClonedService.getCurrentUser();
@@ -55,9 +65,9 @@ public class UserClonedController {
     }
 
 
-    @PostMapping("/add/{userid}/Location/{locationid}")
-    public UserCloned addLocation(@PathVariable Long userid, @PathVariable Long locationid){
-        UserCloned user = userClonedService.getAnUser(userid);
+    @PostMapping("/add/Location/{locationid}")
+    public UserCloned addLocation(@PathVariable Long locationid){
+        UserCloned user = userClonedService.getCurrentUser();
         Location location = locationService.getALocation(locationid);
         user.setLocation(location);
         return userClonedService.addNewUser(user);

@@ -1,11 +1,11 @@
 package com.asib27.authentication.CartItem;
 
-import com.asib27.authentication.Book.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -50,4 +50,16 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Modifying
     @Query(value = "Call update_transaction(?1, ?2)", nativeQuery = true)
     void updateTransaction(Long id, Double totalPrice);
+
+    @Query(value = "select id from cart_item where user_id = ?1", nativeQuery = true)
+    List<Object[]> getAllCartId(Long id);
+
+    @Query(value = "select b.name, b.price, b.link, c.quantity from books b join cart_item c on(b.isbn = c.book_id) where c.id = ?1",nativeQuery = true)
+    List<Object[]> getPartial(BigInteger x);
+
+    @Query(value = "select get_author(?1)", nativeQuery = true)
+    String getAuthor(BigInteger x);
+
+//    @Query(value = "select get_object_fields(?1)", nativeQuery = true)
+//    Map<String, ?> getAnItem(Long cart_id);
 }

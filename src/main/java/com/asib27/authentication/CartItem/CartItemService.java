@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -88,4 +90,33 @@ public class CartItemService {
     public void updateTransactionTable(UserCloned user, Double totalPrice) {
         cartItemRepository.updateTransaction(user.getId(), totalPrice);
     }
+
+    public List<CartItemHelper> getItemList(Long id) {
+        List<Object[]> cartIdList = cartItemRepository.getAllCartId(id);
+        List<BigInteger> idList = new ArrayList<>();
+        for(Object[] x: cartIdList){
+            for(Object y: x){
+                idList.add((BigInteger) y);
+            }
+        }
+
+        List<CartItemHelper> itemList = new ArrayList<>();
+
+        for(BigInteger x: idList){
+            CartItemHelper cartItemHelper = new CartItemHelper();
+            List<Object[]> partial = cartItemRepository.getPartial(x);
+
+            String author = cartItemRepository.getAuthor(x);
+            cartItemHelper.setName((String) partial.get(0)[0]);
+            cartItemHelper.setPrice((int) partial.get(0)[1]);
+            cartItemHelper.setLink((String) partial.get(0)[2]);
+            cartItemHelper.setQuantity((int) partial.get(0)[3]);
+            cartItemHelper.setAuthor_name(author);
+            itemList.add(cartItemHelper);
+        }
+
+        return itemList;
+    }
+
+
 }
