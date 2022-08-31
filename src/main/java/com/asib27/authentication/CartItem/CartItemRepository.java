@@ -15,15 +15,15 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     List<Object[]> getAll(Long id);
 
     @Modifying
-    @Query(value = "DELETE FROM cart_item WHERE (book_id=?1 and user_id=?2);", nativeQuery = true)
+    @Query(value = "DELETE FROM cart_item WHERE book_id=?1 and user_id=?2", nativeQuery = true)
     void removeBook(String bookId, Long id);
 
     @Modifying
-    @Query(value = "DELETE FROM cart_item WHERE user_id=?1;", nativeQuery = true)
+    @Query(value = "DELETE FROM cart_item WHERE user_id = ?1", nativeQuery = true)
     void removeAll(Long id);
 
     @Modifying
-    @Query(value = "UPDATE cart_item SET quantity=?3 WHERE (book_id=?1 AND user_id=?2);", nativeQuery = true)
+    @Query(value = "UPDATE cart_item SET quantity=?3 WHERE (book_id=?1 AND user_id=?2)", nativeQuery = true)
     void updateQuantity(String bookId, Long id, Integer quantity);
 
     @Query(value = "select sum(b.price*c.quantity) from books b join cart_item c on b.isbn = c.book_id where c.user_id=?1", nativeQuery = true)
@@ -63,6 +63,4 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     @Query(value = "select user_id, book_id, quantity from cart_item  where user_id = ?1", nativeQuery = true)
     List<Object[]> getData(Long user_id);
 
-//    @Query(value = "select get_object_fields(?1)", nativeQuery = true)
-//    Map<String, ?> getAnItem(Long cart_id);
 }

@@ -33,10 +33,6 @@ public class CartItemController {
         return cartItemService.getAll(user);
     }
 
-//    @GetMapping("/get/data")
-//    public Map<String,?> getAnItem(@RequestParam Long cart_id){
-//        return cartItemService.getAnItem(cart_id);
-//    }
 
     @GetMapping("/get/data")
     public List<CartItemHelper> getItemList(){
@@ -51,7 +47,7 @@ public class CartItemController {
     }
 
     @DeleteMapping("/removeAll")
-    public void removeBook(){
+    public void removeAllBooks(){
         UserCloned user = userClonedService.getCurrentUser();
         cartItemService.removeAll(user);
     }
