@@ -42,8 +42,13 @@ public class TransactionController {
     }
 
     @GetMapping("/get")
-    public List<Transaction> getAll(@PathVariable Long tx_id){
+    public List<Transaction> getAll(){
         return transactionService.getAllTransactions();
+    }
+
+    @GetMapping("/get/latest")
+    public Transaction getLatest(){
+        return transactionService.getLatestTransaction();
     }
 
 

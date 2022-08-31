@@ -6,6 +6,7 @@ import com.asib27.authentication.Locations.Location;
 import com.asib27.authentication.UserCloned.UserCloned;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,20 +31,13 @@ public class Transaction{
     @Column(name = "total_price")
     private Double total_price;
 
-//    @Column(name = "time_added")
-
+    @Column(name = "added_time")
+    private Timestamp added_time;
 
 
     public Transaction() {
     }
 
-//    public Set<Book> getBooksInTransaction() {
-//        return booksInTransaction;
-//    }
-//
-//    public void addBook(Book book) {
-//        booksInTransaction.add(book);
-//    }
     public Long getId() {
         return id;
     }
@@ -74,5 +68,13 @@ public class Transaction{
 
     public void setTotal_price(Double total_price) {
         this.total_price = total_price;
+    }
+
+    public Timestamp getAdded_time() {
+        return added_time;
+    }
+
+    public void setAdded_time(Timestamp added_time) {
+        this.added_time = added_time;
     }
 }
